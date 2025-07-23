@@ -86,7 +86,7 @@ export function CalendarioColetas({ coletas }: Props) {
                 </p>
               )}
 
-              {/* VERIFICAR ESTA LINHA: Certifique-se de que o href está correto */}
+              {/* Botão "Ver detalhes" com Link correto */}
               <Link href={`/dia/${encodeURIComponent(coleta.dia_semana)}`}>
                 <Button variant="outline" size="sm" className="w-full bg-transparent">
                   Ver detalhes

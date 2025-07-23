@@ -2,11 +2,11 @@
 
 import { Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { Coleta } from "@/lib/api" // Corrigido para "@/lib/api" se for o caso, ou mantenha "@/types" se tiver um types.ts
-import { useActionState } from "react" // useActionState é de 'react'
-import { useFormStatus } from "react-dom" // useFormStatus é de 'react-dom'
+import type { Coleta } from "@/lib/api" // Ou "@/types" se for o caso
+import { useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { updateColetaAction } from "@/app/actions"
-import { useState } from "react"
+// Removido: import { useState } from "react"
 
 type Props = {
   coleta: Coleta
@@ -20,8 +20,8 @@ export function FormularioEdicao({ coleta }: Props) {
 
   const { pending } = useFormStatus()
 
-  const [tipoColeta, setTipoColeta] = useState(coleta.tipo_coleta)
-  const [observacao, setObservacao] = useState(coleta.observacao || "")
+  // Removido: const [tipoColeta, setTipoColeta] = useState(coleta.tipo_coleta)
+  // Removido: const [observacao, setObservacao] = useState(coleta.observacao || "")
 
   const tiposColeta = ["orgânicos", "metal/plástico", "papel/cartão", "sem coleta", "vidro", "têxteis"]
 
@@ -43,8 +43,8 @@ export function FormularioEdicao({ coleta }: Props) {
         <select
           id="tipo-coleta"
           name="tipo_coleta"
-          value={tipoColeta}
-          onChange={(e) => setTipoColeta(e.target.value)}
+          defaultValue={coleta.tipo_coleta} // Alterado de 'value' para 'defaultValue'
+          // Removido: onChange={(e) => setTipoColeta(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         >
@@ -64,8 +64,8 @@ export function FormularioEdicao({ coleta }: Props) {
           id="observacao"
           name="observacao"
           placeholder="Ex: Feriado municipal, alteração temporária..."
-          value={observacao}
-          onChange={(e) => setObservacao(e.target.value)}
+          defaultValue={coleta.observacao || ""} // Alterado de 'value' para 'defaultValue'
+          // Removido: onChange={(e) => setObservacao(e.target.value)}
           rows={3}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />

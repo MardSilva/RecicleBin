@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Edit } from "lucide-react"
 import Link from "next/link"
-import type { Coleta } from "@/lib/api" // Ou "@/types" se for o caso
+import type { Coleta } from "@/lib/api"
 
 interface Props {
   coletas: Coleta[]
@@ -51,44 +51,31 @@ export function CalendarioColetas({ coletas }: Props) {
 
         return (
           <Card
-            key={coleta.id}
-            className={`transition-all hover:shadow-md ${isHoje ? "ring-2 ring-blue-500 bg-blue-50" : ""}`}
+            key={coleta.dia_semana}
+            className={`border ${isHoje ? "border-blue-500 bg-blue-50" : ""}`}
           >
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg capitalize flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  {coleta.dia_semana}
-                  {isHoje && (
-                    <Badge variant="secondary" className="text-xs">
-                      Hoje
-                    </Badge>
-                  )}
-                </CardTitle>
-                <Link href={`/editar/${encodeURIComponent(coleta.dia_semana)}`}>
-                  <Button variant="ghost" size="sm">
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                </Link>
-              </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-lg font-medium flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                {coleta.dia_semana.charAt(0).toUpperCase() + coleta.dia_semana.slice(1)}
+                {isHoje && <span className="text-sm ml-2 text-muted-foreground">Hoje</span>}
+              </CardTitle>
+
+              <Link href={`/editar/${encodeURIComponent(coleta.dia_semana)}`}>
+                <Edit className="w-4 h-4 text-muted-foreground cursor-pointer" />
+              </Link>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{getTipoIcon(coleta.tipo_coleta)}</span>
-                <Badge className={getTipoColor(coleta.tipo_coleta)} variant="secondary">
+
+            <CardContent>
+              <div className="mb-2 flex items-center gap-2">
+                <span>{getTipoIcon(coleta.tipo_coleta)}</span>
+                <Badge className={getTipoColor(coleta.tipo_coleta)}>
                   {coleta.tipo_coleta}
                 </Badge>
               </div>
 
-              {coleta.observacao && (
-                <p className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                  <strong>Obs:</strong> {coleta.observacao}
-                </p>
-              )}
-
-              {/* Botão "Ver detalhes" com Link correto */}
               <Link href={`/dia/${encodeURIComponent(coleta.dia_semana)}`}>
-                <Button variant="outline" size="sm" className="w-full bg-transparent">
+                <Button variant="outline" className="w-full mt-2">
                   Ver detalhes
                 </Button>
               </Link>

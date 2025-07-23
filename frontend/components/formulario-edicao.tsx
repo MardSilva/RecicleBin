@@ -10,7 +10,6 @@ import { useActionState } from "react"
 import { useFormStatus } from "react-dom"
 import { updateColetaAction } from "@/app/actions"
 import Link from "next/link"
-import { toast } from "@/components/ui/use-toast"
 
 type Props = {
   coleta: Coleta
@@ -36,19 +35,12 @@ export function FormularioEdicao({ coleta }: Props) {
     "têxteis",
   ]
 
-  // ✅ Exibe toast ao salvar com sucesso ou erro
+  // ✅ Substituindo toast por alert()
   useEffect(() => {
     if (state.success) {
-      toast({
-        title: "✅ Alterações salvas",
-        description: "A coleta foi atualizada com sucesso.",
-      })
+      alert("✅ Alterações salvas com sucesso.")
     } else if (state.message) {
-      toast({
-        title: "❌ Erro ao salvar",
-        description: state.message,
-        variant: "destructive",
-      })
+      alert(`❌ Erro ao salvar: ${state.message}`)
     }
   }, [state])
 
@@ -114,15 +106,3 @@ export function FormularioEdicao({ coleta }: Props) {
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar
-            </Link>
-
-            <Button type="submit" disabled={pending}>
-              <Save className="mr-2 h-4 w-4" />
-              {pending ? "Salvando..." : "Salvar alterações"}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </form>
-  )
-}

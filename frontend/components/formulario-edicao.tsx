@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Save, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,6 +10,7 @@ import { useActionState } from "react"
 import { useFormStatus } from "react-dom"
 import { updateColetaAction } from "@/app/actions"
 import Link from "next/link"
+import { toast } from "@/components/ui/use-toast"
 
 type Props = {
   coleta: Coleta
@@ -35,6 +36,22 @@ export function FormularioEdicao({ coleta }: Props) {
     "têxteis",
   ]
 
+  // ✅ Exibe toast ao salvar com sucesso ou erro
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: "✅ Alterações salvas",
+        description: "A coleta foi atualizada com sucesso.",
+      })
+    } else if (state.message) {
+      toast({
+        title: "❌ Erro ao salvar",
+        description: state.message,
+        variant: "destructive",
+      })
+    }
+  }, [state])
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
@@ -52,13 +69,16 @@ export function FormularioEdicao({ coleta }: Props) {
 
         <CardContent>
           <div className="mb-4">
-            <label htmlFor="tipo_coleta">Tipo de Coleta</label>
+            <label htmlFor="tipo_coleta" className="block font-medium mb-1">
+              Tipo de Coleta
+            </label>
             <select
               id="tipo_coleta"
               name="tipo_coleta"
               value={tipoColeta}
               onChange={(e) => setTipoColeta(e.target.value)}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
+              disabled={pending}
             >
               {tiposColeta.map((tipo) => (
                 <option key={tipo} value={tipo}>
@@ -69,19 +89,29 @@ export function FormularioEdicao({ coleta }: Props) {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="observacao">Observação</label>
+            <label htmlFor="observacao" className="block font-medium mb-1">
+              Observação (opcional)
+            </label>
             <textarea
               id="observacao"
               name="observacao"
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               placeholder="Ex: Feriado municipal, alteração temporária..."
+              rows={3}
+              disabled={pending}
             />
+            <p className="text-sm text-muted-foreground mt-1">
+              Use este campo para justificar alterações ou exceções no cronograma normal.
+            </p>
           </div>
 
-          <div className="flex justify-between mt-4">
-            <Link href="/" className="text-blue-600 hover:underline flex items-center gap-2">
+          <div className="flex justify-between mt-6">
+            <Link
+              href="/"
+              className="text-blue-600 hover:underline inline-flex items-center gap-2"
+            >
               <ArrowLeft className="h-4 w-4" />
               Voltar
             </Link>

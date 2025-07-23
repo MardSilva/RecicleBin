@@ -28,7 +28,7 @@ export function FormularioEdicao({ coleta }: Props) {
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="dia_semana" value={coleta.dia_semana} />
-      {state.message && (
+      {state.message && state.message !== "NEXT_REDIRECT" && (
         <div
           className={`mb-4 border rounded-lg p-3 ${state.success ? "bg-green-50 border-green-200 text-green-800" : "bg-red-50 border-red-200 text-red-800"}`}
         >

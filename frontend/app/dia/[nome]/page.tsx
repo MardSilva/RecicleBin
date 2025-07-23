@@ -1,10 +1,12 @@
+"use client" // Certifique-se de que esta linha está presente se ainda não estiver
+
 import { api } from "@/lib/api"
-import { notFound } from "next/navigation"
+import { notFound, useRouter } from "next/navigation" // Importe useRouter
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Edit, ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import Link from "next/link" // Manter Link se precisar em outros lugares, mas não para este botão
 
 interface Props {
   params: { nome: string }
@@ -12,6 +14,7 @@ interface Props {
 
 export default async function DiaPage({ params }: Props) {
   const diaSemana = decodeURIComponent(params.nome)
+  const router = useRouter() // Inicialize o useRouter
 
   let coleta = null
   let error = null
@@ -60,12 +63,18 @@ export default async function DiaPage({ params }: Props) {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
-          <Link href="/">
-            <Button variant="ghost" className="mb-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Voltar ao calendário
-            </Button>
-          </Link>
+          {/* ALTERAÇÃO AQUI: Usar Button com onClick para forçar refresh */}
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={() => {
+              router.push("/") // Navega para a página principal
+              router.refresh() // Força a revalidação da página principal
+            }}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Voltar ao calendário
+          </Button>
         </div>
 
         <Card>

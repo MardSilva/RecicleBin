@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Edit } from "lucide-react"
 import Link from "next/link"
-import type { Coleta } from "@/lib/api"
+import type { Coleta } from "@/lib/api" // Ou "@/types" se for o caso
 
 interface Props {
   coletas: Coleta[]
@@ -86,6 +86,7 @@ export function CalendarioColetas({ coletas }: Props) {
                 </p>
               )}
 
+              {/* VERIFICAR ESTA LINHA: Certifique-se de que o href está correto */}
               <Link href={`/dia/${encodeURIComponent(coleta.dia_semana)}`}>
                 <Button variant="outline" size="sm" className="w-full bg-transparent">
                   Ver detalhes

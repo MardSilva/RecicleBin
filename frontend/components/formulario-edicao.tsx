@@ -35,7 +35,6 @@ export function FormularioEdicao({ coleta }: Props) {
     "têxteis",
   ]
 
-  // ✅ Substituindo toast por alert()
   useEffect(() => {
     if (state.success) {
       alert("✅ Alterações salvas com sucesso.")
@@ -106,3 +105,15 @@ export function FormularioEdicao({ coleta }: Props) {
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar
+            </Link>
+
+            <Button type="submit" disabled={pending}>
+              <Save className="mr-2 h-4 w-4" />
+              {pending ? "Salvando..." : "Salvar alterações"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </form>
+  )
+}

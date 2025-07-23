@@ -2,9 +2,10 @@
 
 import { Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { Coleta } from "@/types"
-import { useActionState, useFormStatus } from "react"
-import { updateColetaAction } from "@/app/actions" // Importe o Server Action
+import type { Coleta } from "@/lib/api" // Corrigido para "@/lib/api" se for o caso, ou mantenha "@/types" se tiver um types.ts
+import { useActionState } from "react" // useActionState é de 'react'
+import { useFormStatus } from "react-dom" // useFormStatus é de 'react-dom'
+import { updateColetaAction } from "@/app/actions"
 import { useState } from "react"
 
 type Props = {
@@ -12,20 +13,13 @@ type Props = {
 }
 
 export function FormularioEdicao({ coleta }: Props) {
-  // Use useActionState para gerir o estado da submissão do formulário
   const [state, formAction] = useActionState(updateColetaAction, {
     success: false,
     message: null,
   })
 
-  // Use useFormStatus para obter o estado de submissão do formulário
   const { pending } = useFormStatus()
 
-  // Os estados para os inputs controlados podem permanecer se desejar,
-  // mas o formulário enviará os valores diretamente via FormData.
-  // Para simplificar, podemos usar defaultValue e deixar o FormData lidar com isso.
-  // Ou manter os estados para validação em tempo real, se necessário.
-  // Por enquanto, vamos manter os estados para os inputs controlados para consistência.
   const [tipoColeta, setTipoColeta] = useState(coleta.tipo_coleta)
   const [observacao, setObservacao] = useState(coleta.observacao || "")
 
@@ -48,7 +42,7 @@ export function FormularioEdicao({ coleta }: Props) {
         </label>
         <select
           id="tipo-coleta"
-          name="tipo_coleta" // Adicione esta linha
+          name="tipo_coleta"
           value={tipoColeta}
           onChange={(e) => setTipoColeta(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -68,7 +62,7 @@ export function FormularioEdicao({ coleta }: Props) {
         </label>
         <textarea
           id="observacao"
-          name="observacao" // Adicione esta linha
+          name="observacao"
           placeholder="Ex: Feriado municipal, alteração temporária..."
           value={observacao}
           onChange={(e) => setObservacao(e.target.value)}

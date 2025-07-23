@@ -39,7 +39,7 @@ const { Pool } = require("pg")
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-  max: 20,
+  max: 20, // máximo de conexões
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
 })
@@ -59,6 +59,7 @@ async function initDatabase() {
   try {
     console.log("🔄 Verificando/criando tabela coletas...")
 
+    // Criar tabela se não existir
     await client.query(`
       CREATE TABLE IF NOT EXISTS coletas (
         id SERIAL PRIMARY KEY,
@@ -70,11 +71,13 @@ async function initDatabase() {
       )
     `)
 
+    // Verificar se há dados
     const countResult = await client.query("SELECT COUNT(*) FROM coletas")
     const count = Number.parseInt(countResult.rows[0].count)
 
     console.log(`📊 Registros existentes: ${count}`)
 
+    // Popular dados iniciais se vazio
     if (count === 0) {
       console.log("🔄 Inserindo dados iniciais da semana...")
 
@@ -94,8 +97,11 @@ async function initDatabase() {
       }
 
       console.log("🎉 Dados iniciais inseridos com sucesso!")
+    } else {
+      console.log("✅ Tabela já possui dados, pulando inicialização")
     }
 
+    // Testar uma query simples
     const testResult = await client.query("SELECT dia_semana, tipo_coleta FROM coletas LIMIT 1")
     console.log("🧪 Teste de query:", testResult.rows[0])
   } catch (error) {
@@ -199,6 +205,7 @@ app.put("/api/dia/:nome", async (req, res) => {
 
     console.log(`🔄 Atualizando ${diaSemana}:`, { tipo_coleta, observacao })
 
+    // Validação
     if (!tipo_coleta || tipo_coleta.trim() === "") {
       return res.status(400).json({
         success: false,
@@ -207,6 +214,7 @@ app.put("/api/dia/:nome", async (req, res) => {
       })
     }
 
+    // Verificar se existe
     const checkResult = await pool.query("SELECT id FROM coletas WHERE LOWER(dia_semana) = $1", [diaSemana])
 
     if (checkResult.rows.length === 0) {
@@ -225,6 +233,7 @@ app.put("/api/dia/:nome", async (req, res) => {
       })
     }
 
+    // Atualizar
     const result = await pool.query(
       `
       UPDATE coletas 
@@ -289,4 +298,4 @@ async function startServer() {
   }
 }
 
-startServer()
+startServer() // ✅ ESTA LINHA DEVE ESTAR AQUI!

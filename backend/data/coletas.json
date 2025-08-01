@@ -1,0 +1,64 @@
+{
+  "coletas": [
+    {
+      "id": 1,
+      "dia_semana": "segunda-feira",
+      "tipo_coleta": "vidro",
+      "observacao": null,
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "dia_semana": "terça-feira",
+      "tipo_coleta": "resíduos",
+      "observacao": "Inclui resíduos alimentares e resíduos verdes (relvas, adubo, terras de plantas e etc.)",
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "dia_semana": "quarta-feira",
+      "tipo_coleta": "orgânicos",
+      "observacao": null,
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "dia_semana": "quinta-feira",
+      "tipo_coleta": "metal/plástico",
+      "observacao": null,
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "dia_semana": "sexta-feira",
+      "tipo_coleta": "papel/cartão",
+      "observacao": null,
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "dia_semana": "sábado",
+      "tipo_coleta": "sem coleta",
+      "observacao": "Sem coleta definida pelo calendário de Sta. Maria da Feira",
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "dia_semana": "domingo",
+      "tipo_coleta": "sem coleta",
+      "observacao": "Sem coleta definida pelo calendário de Sta. Maria da Feira",
+      "created_at": "2025-01-08T10:00:00.000Z",
+      "updated_at": "2025-01-08T10:00:00.000Z"
+    }
+  ],
+  "metadata": {
+    "last_updated": "2025-01-08T10:00:00.000Z",
+    "version": "1.0.0"
+  }
+}

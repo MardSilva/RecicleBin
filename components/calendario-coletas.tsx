@@ -22,10 +22,6 @@ export function CalendarioColetas({ coletas }: Props) {
         return "bg-yellow-100 text-yellow-800 border-yellow-200"
       case "papel/cartão":
         return "bg-blue-100 text-blue-800 border-blue-200"
-      case "vidro":
-        return "bg-emerald-100 text-emerald-800 border-emerald-200"
-      case "resíduos":
-        return "bg-orange-100 text-orange-800 border-orange-200"
       case "sem coleta":
         return "bg-gray-100 text-gray-800 border-gray-200"
       default:
@@ -41,10 +37,6 @@ export function CalendarioColetas({ coletas }: Props) {
         return "♻️"
       case "papel/cartão":
         return "📄"
-      case "vidro":
-        return "🍶"
-      case "resíduos":
-        return "🥬"
       case "sem coleta":
         return "🚫"
       default:

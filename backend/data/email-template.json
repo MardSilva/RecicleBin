@@ -1,0 +1,22 @@
+{
+  "template": {
+    "subject": "📅 Calendário de Coleta de Lixo - São João de Ver",
+    "greeting": "Caro(a) munícipe,",
+    "main_message": "Agradecemos por ter fornecido o seu endereço de email para receber o calendário de coleta de lixo de São João de Ver.",
+    "pdf_description": "Em anexo encontrará o PDF com o calendário completo dos dias e tipos de coleta seletiva na nossa freguesia, que tivemos o prazer de montar e enviar especialmente para si.",
+    "features": [
+      "📅 Dias da semana para cada tipo de coleta",
+      "♻️ Tipos de resíduos (orgânicos, metal/plástico, papel/cartão, etc.)",
+      "⏰ Horários e instruções importantes",
+      "📋 Observações especiais e alterações"
+    ],
+    "closing_message": "Esperamos que esta informação seja útil para si e contribua para uma melhor gestão dos resíduos na nossa comunidade.",
+    "signature": "Sistema de Coleta de Lixo - São João de Ver",
+    "unsubscribe_message": "Este é um serviço de informação sobre coleta de lixo. Se desejar ser removido(a) da nossa lista de envios, por favor entre em contacto connosco através do email {CONTACT_EMAIL} ou clique aqui para cancelar a subscrição.",
+    "footer_message": "Este email foi enviado automaticamente pelo Sistema de Coleta de Lixo de São João de Ver."
+  },
+  "metadata": {
+    "last_updated": "2025-01-08T10:00:00.000Z",
+    "version": "1.0.0"
+  }
+}

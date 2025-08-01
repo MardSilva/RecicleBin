@@ -1,0 +1,54 @@
+{
+  "name": "coleta-lixo-backend",
+  "version": "1.0.0",
+  "description": "API para sistema de coleta de lixo - São João de Ver, Portugal",
+  "keywords": [
+    "coleta",
+    "lixo",
+    "portugal",
+    "api",
+    "railway"
+  ],
+  "license": "MIT",
+  "author": "Sistema Coleta São João de Ver",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "node -e \"console.log('✅ Package.json OK')\""
+  },
+  "dependencies": {
+    "better-sqlite3": "latest",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cors": "latest",
+    "crypto": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "fs": "latest",
+    "helmet": "latest",
+    "lucide-react": "^0.454.0",
+    "next": "15.2.4",
+    "nodemailer": "latest",
+    "path": "latest",
+    "pg": "latest",
+    "pg-native": "latest",
+    "puppeteer": "latest",
+    "react": "^19",
+    "react-dom": "^19",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "nodemon": "^3.0.2",
+    "postcss": "^8.5",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

@@ -1,6 +1,5 @@
 import { api } from "@/lib/api"
 import { CalendarioColetas } from "@/components/calendario-coletas"
-import { EmailSubscription } from "@/components/email-subscription"
 
 export default async function HomePage() {
   let coletas = []
@@ -36,10 +35,6 @@ export default async function HomePage() {
         </header>
 
         <CalendarioColetas coletas={coletas} />
-
-        <div className="mt-12">
-          <EmailSubscription />
-        </div>
       </div>
     </div>
   )

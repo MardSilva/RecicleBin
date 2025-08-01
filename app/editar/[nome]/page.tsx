@@ -1,4 +1,4 @@
-import { api } from "@/lib/api"
+import { dataService } from "@/lib/dataService"
 import { notFound } from "next/navigation"
 import { FormularioEdicao } from "@/components/formulario-edicao"
 
@@ -13,11 +13,8 @@ export default async function EditarPage({ params }: Props) {
   let error = null
 
   try {
-    coleta = await api.getDia(diaSemana)
+    coleta = await dataService.getColetaByDia(diaSemana)
   } catch (err) {
-    if (err instanceof Error && "status" in err && (err as any).status === 404) {
-      notFound()
-    }
     error = err instanceof Error ? err.message : "Erro ao carregar dados"
   }
 

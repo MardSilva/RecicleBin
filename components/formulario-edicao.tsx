@@ -1,42 +1,37 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Save, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import type { Coleta } from "@/lib/api"
+import { useActionState } from "react"
+import { useFormStatus } from "react-dom"
+import { updateColetaAction } from "@/app/actions"
 import Link from "next/link"
-import { api, type Coleta } from "@/lib/api"
 
-interface Props {
+type Props = {
   coleta: Coleta
 }
 
 export function FormularioEdicao({ coleta }: Props) {
+  const [state, formAction] = useActionState(updateColetaAction, {
+    success: false,
+    message: null,
+  })
+
+  const { pending } = useFormStatus()
+
   const [tipoColeta, setTipoColeta] = useState(coleta.tipo_coleta)
   const [observacao, setObservacao] = useState(coleta.observacao || "")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
 
-  const tiposColeta = ["orgânicos", "metal/plástico", "papel/cartão", "sem coleta", "vidro", "têxteis"]
+  const tiposColeta = ["orgânicos", "metal/plástico", "papel/cartão", "vidro", "resíduos", "sem coleta", "têxteis"]
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      await api.updateDia(coleta.dia_semana, tipoColeta, observacao.trim() || undefined)
-      router.push(`/dia/${encodeURIComponent(coleta.dia_semana)}`)
-      router.refresh()
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao atualizar coleta")
-    } finally {
-      setIsLoading(false)
-    }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    formAction(formData)
   }
 
   return (
@@ -55,19 +50,24 @@ export function FormularioEdicao({ coleta }: Props) {
           <CardTitle className="capitalize">Editar coleta - {coleta.dia_semana}</CardTitle>
         </CardHeader>
         <CardContent>
-          {error && (
-            <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-red-800 text-sm">❌ {error}</p>
+          {state.message && state.message !== "NEXT_REDIRECT" && (
+            <div
+              className={`mb-4 border rounded-lg p-3 ${state.success ? "bg-green-50 border-green-200 text-green-800" : "bg-red-50 border-red-200 text-red-800"}`}
+            >
+              <p className="text-sm">❌ {state.message}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <input type="hidden" name="dia_semana" value={coleta.dia_semana} />
+
             <div className="space-y-2">
-              <label htmlFor="tipo-coleta" className="block text-sm font-medium">
+              <label htmlFor="tipo-coleta" className="block text-sm font-medium text-gray-700">
                 Tipo de Coleta
               </label>
               <select
                 id="tipo-coleta"
+                name="tipo_coleta"
                 value={tipoColeta}
                 onChange={(e) => setTipoColeta(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -82,11 +82,12 @@ export function FormularioEdicao({ coleta }: Props) {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="observacao" className="block text-sm font-medium">
+              <label htmlFor="observacao" className="block text-sm font-medium text-gray-700">
                 Observação (opcional)
               </label>
               <textarea
                 id="observacao"
+                name="observacao"
                 placeholder="Ex: Feriado municipal, alteração temporária..."
                 value={observacao}
                 onChange={(e) => setObservacao(e.target.value)}
@@ -99,9 +100,9 @@ export function FormularioEdicao({ coleta }: Props) {
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button type="submit" disabled={isLoading} className="flex-1">
+              <Button type="submit" disabled={pending} className="flex-1">
                 <Save className="w-4 h-4 mr-2" />
-                {isLoading ? "Salvando..." : "Salvar alterações"}
+                {pending ? "Salvando..." : "Salvar alterações"}
               </Button>
               <Link href={`/dia/${encodeURIComponent(coleta.dia_semana)}`}>
                 <Button type="button" variant="outline">

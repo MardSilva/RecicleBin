@@ -1,4 +1,4 @@
-import { api } from "@/lib/api"
+import { dataService } from "@/lib/dataService"
 import { notFound } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -17,11 +17,8 @@ export default async function DiaPage({ params }: Props) {
   let error = null
 
   try {
-    coleta = await api.getDia(diaSemana)
+    coleta = await dataService.getColetaByDia(diaSemana)
   } catch (err) {
-    if (err instanceof Error && "status" in err && (err as any).status === 404) {
-      notFound()
-    }
     error = err instanceof Error ? err.message : "Erro ao carregar dados"
   }
 
@@ -49,6 +46,10 @@ export default async function DiaPage({ params }: Props) {
         return "bg-yellow-100 text-yellow-800"
       case "papel/cartão":
         return "bg-blue-100 text-blue-800"
+      case "vidro":
+        return "bg-emerald-100 text-emerald-800"
+      case "resíduos":
+        return "bg-orange-100 text-orange-800"
       case "sem coleta":
         return "bg-gray-100 text-gray-800"
       default:

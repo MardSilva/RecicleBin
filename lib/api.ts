@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001/api"
+const API_BASE_URL = "/api"
 
 export interface Coleta {
   id: number
@@ -48,19 +48,16 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
       throw error
     }
 
-    // Erro de rede ou parsing
     throw new ApiError(0, "Erro de conexão com o servidor")
   }
 }
 
 export const api = {
-  // GET /semana - Buscar todas as coletas da semana
   getSemana: async (): Promise<Coleta[]> => {
     const response = await fetchApi<ApiResponse<Coleta[]>>("/semana")
     return response.data || []
   },
 
-  // GET /dia/:nome - Buscar coleta de um dia específico
   getDia: async (diaSemana: string): Promise<Coleta> => {
     const response = await fetchApi<ApiResponse<Coleta>>(`/dia/${encodeURIComponent(diaSemana)}`)
     if (!response.data) {
@@ -69,7 +66,6 @@ export const api = {
     return response.data
   },
 
-  // PUT /dia/:nome - Atualizar coleta de um dia
   updateDia: async (diaSemana: string, tipoColeta: string, observacao?: string): Promise<Coleta> => {
     const response = await fetchApi<ApiResponse<Coleta>>(`/dia/${encodeURIComponent(diaSemana)}`, {
       method: "PUT",
